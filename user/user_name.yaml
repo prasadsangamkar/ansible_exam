@@ -1,0 +1,13 @@
+users:
+  - username: alice
+    uid: 1201
+    pw: devops
+  - username: vincent
+    uid: 1202
+    pw: devops
+  - username: sandy
+    uid: 2201
+    pw: devops
+  - username: patrick
+    uid: 2202
+    pw: devops
