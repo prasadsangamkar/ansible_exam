@@ -1,0 +1,16 @@
+---
+ - hosts: group1
+   become: true
+   vars_files:
+      - user/user_name.yaml
+   tasks:
+      - user:
+            name: "{{ item.username }}"
+            uid: "{{ item.uid }}"
+            groups: prasad
+            shell: /bin/bash
+            password: "{{ item.pw }}"
+            generate_ssh_key: yes
+            append: yes
+        with_items:
+           - "{{ users }}"
