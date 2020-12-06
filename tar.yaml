@@ -1,0 +1,12 @@
+---
+ - hosts: app
+   become: yes
+   tasks:
+       - name: creating pro tar
+         command: "tar -cvf /var/tmp/pro.tar.gz /var/www/html"
+         tags: pro
+         when: inventory_hostname in groups['pro']
+       - name: creating back tar
+         command: "tar -cvf /var/tmp/back.tar.gz /var/log/httpd"
+         tags: back
+         when: inventory_hostname in groups['back']
