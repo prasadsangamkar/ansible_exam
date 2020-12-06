@@ -1,0 +1,35 @@
+[root@node1 apache]# cat tasks/main.yml
+---
+# tasks file for apache
+- name: installing httpd
+  yum:
+    name: httpd
+    state: present
+- name: craeting templet
+  template:
+    src: my.j2
+    dest: /var/www/html/index.html
+  notify: restart httpd
+- name: adding port to firewall
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+  notify: reload httpd
+
+[root@node1 apache]# cat templates/my.j2
+Hello from J2 Apache
+hiiiii radadad
+
+[root@node1 apache]# cat handlers/main.yml
+---
+# handlers file for apache
+- name: restart httpd
+  service:
+    name: httpd
+    state: restarted
+    enabled: yes
+- name: reload httpd
+  service:
+    name: firewalld
+    state: reloaded
