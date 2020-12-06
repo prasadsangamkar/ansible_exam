@@ -1,0 +1,8 @@
+---
+ - hosts: app
+   become: yes
+   tasks:
+     - name: collecting facts
+       copy:
+          dest: /root/po.txt
+          content: "{{ ansible_fqdn }} {{ ansible_processor_count }} \n {{ ansible_default_ipv4.address }} {{ ansible_default_ipv4.macaddress }}"
