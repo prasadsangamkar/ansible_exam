@@ -1,0 +1,14 @@
+---
+ - hosts: group1
+   become: true
+   tasks:
+     - name: inatalling httpd
+       yum:
+         name: httpd
+         state: present
+       when: ansible_hostname == "node1"
+     - name: inatalling httpd
+       yum:
+         name: vsftpd
+         state: present
+       when: ansible_hostname == "node2"
