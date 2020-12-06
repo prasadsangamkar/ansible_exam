@@ -1,0 +1,43 @@
+[root@node1 playbooks]# cat access1.yaml
+---
+ - hosts: app
+   become: true
+   tasks:
+     - block:
+         - name: accessing site
+           uri:
+              url: http://www.google.com
+           register: result
+         - name: creating access1.html
+           copy:
+              content: "I am accesss1"
+              dest: /var/www/html/access1.html
+           when: result.status == 200
+       rescue:
+         - name: create no access
+           copy:
+              content: "I am not accesss1"
+              dest: /var/www/html/noaccess1.html
+[root@node1 playbooks]# cat access.yaml
+---
+ - hosts: app
+   become: true
+   tasks:
+    - block:
+        - name: accessing url
+          uri:
+             url: http://google.com
+          register: result
+        - name: creating access.html
+          copy:
+             content: "I am Accessiable"
+             dest: /var/www/html/access.html
+          when: result.status == 200
+      rescue:
+        - name: create no access
+          copy:
+             content: "I am not Accessiable"
+             dest: /var/www/html/noaccess.html
+[root@node1 playbooks]#
+
+==================================================================
