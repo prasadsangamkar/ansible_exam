@@ -1,0 +1,13 @@
+---
+ - hosts: app
+   become: true
+   tasks:
+     - name: hecking path exist or not
+       stat:
+         path: /etc/abc.txt
+       register: result
+     - name: creating if path not exist
+       copy:
+          dest: /etc/abc.txt
+          content: "I am exists"
+       when: result.stat.exists == false
