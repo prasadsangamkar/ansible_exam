@@ -1,0 +1,16 @@
+---
+ - hosts: app
+   become: true
+   tasks:
+     - name: creating tag1.html
+       copy:
+         dest: /var/www/html/tag1.html
+         content: "I am tag1"
+       tags: tag1
+       when: ansible_hostname == 'node1'
+     - name: creating tag2.html
+       copy:
+         dest: /var/www/html/tag2.html
+         content: "I am tag2"
+       tags: tag2
+       when: ansible_hostname == 'node2'
