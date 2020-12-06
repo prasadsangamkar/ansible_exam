@@ -1,0 +1,13 @@
+---
+ - hosts: app
+   become: true
+   tasks:
+     - name: installing httpd
+       yum:
+         name: httpd
+         state: present
+     - name: starting setvice
+       service:
+         name: httpd
+         state: started
+         enabled: yes
