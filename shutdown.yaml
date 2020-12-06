@@ -1,0 +1,9 @@
+---
+ - hosts: app
+   become: true
+   tasks:
+      - name: stop httpd service
+        service:
+          name: httpd
+          state: stopped
+        when: ansible_hostname == 'node1'
