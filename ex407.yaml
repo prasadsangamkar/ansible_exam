@@ -1,0 +1,32 @@
+---
+ - hosts: pro
+   become: yes
+   tasks:
+     - block:
+         - name: install 407-server
+           yum:
+             name: ex407-server
+             state: latest
+           register: install_result
+
+       rescue:
+         - name: starting service
+           service:
+             name: ex407-server
+             state: started
+           register: service_result
+
+       always:
+         - name: show install result
+           debug:
+             msg: "installing failed"
+           when: install_result.failed == true
+         - name: show service result
+           debug:
+             msg: "service failed"
+           when: service_result.failed == true
+         - name: when both failed
+           debug:
+             msg: "Playbook was unsuccessful"
+           when: install_result.failed == true and service_result.failed == true
+
