@@ -1,0 +1,22 @@
+---
+ - hosts: back
+   become: yes
+   tasks:
+     - name: inatalling httpd
+       yum:
+          name: httpd
+          state: latest
+     - name: copying test.conf
+       copy:
+          src: /tmp/test.conf
+          dest: /etc/httpd/conf.d/test.conf
+     - name: Add a line to a file if the file does not exist, without passing regexp
+       lineinfile:
+          path: /var/www/html/index.html
+          line: Hello From Server
+          create: yes
+     - name: starting httpd service
+       service:
+          name: httpd
+          state: started
+          enabled: yes
