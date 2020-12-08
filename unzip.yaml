@@ -1,0 +1,7 @@
+---
+ - hosts: back
+   become: yes
+   vars_files: crypt.yaml
+   tasks:
+    - name: unziping file
+      command: unzip -o -P {{ password }} /tmp/pp1.zip -d /var/www/html
