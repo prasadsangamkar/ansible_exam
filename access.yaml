@@ -1,0 +1,19 @@
+---
+ - hosts: app
+   become: true
+   tasks:
+    - block:
+        - name: accessing url
+          uri:
+             url: http://google.com
+          register: result
+        - name: creating access.html
+          copy:
+             content: "I am Accessiable"
+             dest: /var/www/html/access.html
+          when: result.status == 200
+      rescue:
+        - name: create no access
+          copy:
+             content: "I am not Accessiable"
+             dest: /var/www/html/noaccess.html
